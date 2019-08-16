@@ -2,9 +2,10 @@
 # USE THESAURUS_DB
 DATABASE = "THESAURUS_DB"
 
-# CREATE USER 'thesaurus'@'localhost' IDENTIFIED BY 'thesaurus_pwd';
+# CREATE USER 'thesaurus'@'localhost' IDENTIFIED BY 'thesauruspwd';
+# GRANT ALL PRIVILEGES ON * . * TO 'thesaurus'@'localhost';
 USER = "thesaurus"
-PASSWORD = "thesaurus_pwd"
+PASSWORD = "thesauruspwd"
 HOST = "localhost"
 
 TABLES = {}
