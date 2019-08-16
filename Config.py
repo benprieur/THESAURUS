@@ -9,38 +9,40 @@ PASSWORD = "thesauruspwd"
 HOST = "localhost"
 
 TABLES = {}
-TABLES['User'] = (
-    " CREATE TABLE IF NOT EXISTS User (" 
-    " id INT unsigned NOT NULL AUTO_INCREMENT," 
+TABLES['TUSER'] = (
+    " CREATE TABLE IF NOT EXISTS TUSER (" 
+    " id INT(10) unsigned NOT NULL AUTO_INCREMENT," 
     " name VARCHAR(200) NOT NULL," 
     " PRIMARY KEY(id)," 
-    " name VARCHAR(200)," 
-    " isIP INTEGER DEFAULT 0," 
+    " isIP BOOLEAN DEFAULT FALSE," 
     " UNIQUE KEY name (name)" 
     " ) ENGINE=InnoDB;")
 
-TABLES['Thesaurus'] = (
-    " CREATE TABLE IF NOT EXISTS Thesaurus ("
-    " id INT unsigned NOT NULL AUTO_INCREMENT,"
+TABLES['TTHESAURUS'] = (
+    " CREATE TABLE IF NOT EXISTS TTHESAURUS ("
+    " id INT(10) unsigned NOT NULL AUTO_INCREMENT,"
     " name VARCHAR(200) NOT NULL,"
     " PRIMARY KEY(id),"
     " creationDateTime DATETIME,"
     " UNIQUE KEY name (name)"
     " ) ENGINE=InnoDB;")
 
-TABLES['Edit'] = (
-    " CREATE TABLE IF NOT EXISTS Edit ("
-    " id INT unsigned NOT NULL AUTO_INCREMENT,"
+TABLES['TEDIT'] = (
+    " CREATE TABLE IF NOT EXISTS TEDIT ("
+    " id INT(10) unsigned NOT NULL AUTO_INCREMENT,"
     " name VARCHAR(200) NOT NULL,"
     " PRIMARY KEY(id),"
     " code VARCHAR(200),"
     " instant DATETIME,"
-    " editSize INT,"
-    " idThesaurus INT,"
-    " idUser INT,"
+    " editSize INT(10),"
+    " idThesaurus INT(10) unsigned,"
+    " idUser INT(10) unsigned,"
     " UNIQUE KEY name (code),"
-    " CONSTRAINT fk_id_thesaurus FOREIGN KEY (idThesaurus)"
-    " REFERENCES Thesaurus(id) ON DELETE CASCADE,"
-    " CONSTRAINT fk_id_User FOREIGN KEY (idUser)"
-    " REFERENCES User(id) ON DELETE CASCADE"
+    " CONSTRAINT fk_id_thesaurus FOREIGN KEY(idThesaurus) REFERENCES TTHESAURUS(id),"
+    " CONSTRAINT fk_id_user FOREIGN KEY(idUser) REFERENCES TUSER(id)"
+    " ) ENGINE=InnoDB; ")
+
+TABLES['TUTILS'] = (
+    " CREATE TABLE IF NOT EXISTS TUTILS ("
+    " lastUpdate DATETIME"
     " ) ENGINE=InnoDB; ")

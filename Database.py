@@ -31,6 +31,17 @@ class Database:
             print("\t CREATION DB Ok")
             self.use_database(dbname)
 
+    def remove_database(self, dbname):
+        try:
+            req = ("DROP DATABASE {}".format(
+                dbname))
+            self.execute_request(req)
+        except mysql.connector.Error as error:
+            print("Failed deleting database: {}".format(error))
+            exit(1)
+        else:
+            print("\t DELETION DB Ok")
+
     def create_tables(self, tables, database):
 
         for table_name in tables:
@@ -44,7 +55,7 @@ class Database:
                 else:
                     print(error.msg)
             else:
-                print("\t CREATION TABLES Ok")
+                print("\t CREATION TABLE Ok")
                 database.commit()
 
     def execute_request(self, req):
