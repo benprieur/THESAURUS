@@ -63,7 +63,6 @@ class Database:
         try:
             self.mycursor.execute(req)
         except Exception as error:
-            # Display the SQL query and the error
             print("Incorrect SQL query: \n {} \n Detected error : ".format(
                 req))
             print(error)
