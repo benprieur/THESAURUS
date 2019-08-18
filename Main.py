@@ -84,9 +84,18 @@ for item in category.newest_pages():
 
       # Get user info
       userName = revInfo.user
+
+      if "Bot" in userName or "bot" in userName:
+        continue
       print(userName)
-      userInfo = pywikibot.User(siteWiktionary, userName)
+      userInfo = {}
+      try:
+        userInfo = pywikibot.User(siteWiktionary, userName)
+      except KeyError:
+        continue
+
       props = userInfo.getprops()
+
       userId = 0
       try:
         userId = props["userid"]
@@ -96,6 +105,7 @@ for item in category.newest_pages():
       isIP = False
       if userId == 0:
         isIP = True
+
       sql = "SELECT * FROM TUSER WHERE userName = %s"
       adr = (userName, )
       cursor.execute(sql, adr)
@@ -119,9 +129,17 @@ for item in category.newest_pages():
       print("TUSER_id avant insert :", TUSER_id)
       cursor.execute("INSERT INTO TREVISION (revId, instant, currentSize, diffSize, idThesaurus, idUser) VALUES (%s, %s, %s, %s, %s, %s)", (revId, dt, currentSize, diffSize, TTHESAURUS_id, TUSER_id))
 
-nb1 = cursor.execute("SELECT COUNT(*) FROM TUSER")
-print("Users : ", nb1)
-nb2 = cursor.execute("SELECT COUNT(*) FROM TTHESAURUS")
-print("Thesaurus : ", nb2)
-nb3 = cursor.execute("SELECT COUNT(*) FROM TTREVISION")
-print("Revisions : ", nb3)
+      cursor.execute("SELECT * FROM TUSER")
+      cursor.fetchall()
+      nb1 = cursor.rowcount
+      print("Users : ", nb1)
+
+      cursor.execute("SELECT * FROM TREVISION")
+      cursor.fetchall()
+      nb3 = cursor.rowcount
+      print("Revisions : ", nb3)
+
+      cursor.execute("SELECT * FROM TTHESAURUS")
+      cursor.fetchall()
+      nb2 = cursor.rowcount
+      print("Thesaurus : ", nb2)
