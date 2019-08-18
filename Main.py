@@ -91,7 +91,7 @@ for item in category.newest_pages():
       userInfo = {}
       try:
         userInfo = pywikibot.User(siteWiktionary, userName)
-      except KeyError:
+      except:
         continue
 
       props = userInfo.getprops()
@@ -99,7 +99,7 @@ for item in category.newest_pages():
       userId = 0
       try:
         userId = props["userid"]
-      except KeyError:
+      except:
         print("Probably an IP")
 
       isIP = False
