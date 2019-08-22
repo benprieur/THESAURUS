@@ -9,6 +9,3 @@ Ce code est utilisé/repris par un client web de visualisation, THESAURUS-web.
 
 Au 18 août 2019, il existe 420 thésaurus en français sur fr.wikt édités par 574 édit.eur.rice.s (IP ou compte inscrit) hors bot, pour un total de 8.706 éditions.
 
-Users :  574
-Revisions :  8706
-Thesaurus :  420
