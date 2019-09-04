@@ -57,6 +57,10 @@ for item in category.newest_pages():
   title = item.title()
   print(title)
 
+  if title.__contains__("Catégorie:"):
+    print("ERROR", title)
+    continue
+
   print("CURRENT_UPDATE_DATETIME :", CURRENT_UPDATE_DATETIME)
 
   TTHESAURUS_id = -1
