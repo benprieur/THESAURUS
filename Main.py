@@ -25,8 +25,8 @@ cursor.execute("SELECT * FROM TUTILS")
 row = cursor.fetchone()
 NEW_UPDATE_DATETIME = {}
 CURRENT_UPDATE_DATETIME = {}
-
-if cursor.rowcount == 0:
+print(cursor.rowcount)
+if cursor.rowcount == 0 or cursor.rowcount == -1:
   NEW_UPDATE_DATETIME = datetime.utcnow()
   CURRENT_UPDATE_DATETIME = datetime(2000, 1, 1, 12, 0)
   now = NEW_UPDATE_DATETIME.strftime('%Y-%m-%d %H:%M:%S')
@@ -57,13 +57,17 @@ for item in category.newest_pages():
   title = item.title()
   print(title)
 
-  print("date_creation_thesaurus  :", date_creation_thesaurus)
   print("CURRENT_UPDATE_DATETIME :", CURRENT_UPDATE_DATETIME)
 
   TTHESAURUS_id = -1
   if date_creation_thesaurus > CURRENT_UPDATE_DATETIME:
+    dt = str(date_creation_thesaurus)
+    dt = dt.replace("T", " ")
+    dt = dt.replace("Z", " ")
+    print("date_creation_thesaurus  :", dt)
     # In that case we add an item to the dedicated table
-    cursor.execute("INSERT INTO TTHESAURUS (name, creationDateTime) VALUES (%s, %s)", (title, date_creation_thesaurus))
+    cursor.execute("INSERT INTO TTHESAURUS (name, creationDateTime) VALUES (%s, %s)", (title, dt))
+    cnx.commit()
     TTHESAURUS_id = cursor.lastrowid
   else:
     sql = "SELECT * FROM TTHESAURUS WHERE name = %s"
@@ -115,6 +119,7 @@ for item in category.newest_pages():
       if len(results) == 0:
         cursor.execute("INSERT INTO TUSER (userName, userId, isIP) VALUES (%s, %s, %s)", (userName, userId, isIP))
         TUSER_id = cursor.lastrowid
+        cnx.commit()
       else:
         print(results[0])
         TUSER_id = results[0][0]
@@ -127,8 +132,11 @@ for item in category.newest_pages():
 
       print("TTHESAURUS_id avant insert :" ,TTHESAURUS_id)
       print("TUSER_id avant insert :", TUSER_id)
-      cursor.execute("INSERT INTO TREVISION (revId, instant, currentSize, diffSize, idThesaurus, idUser) VALUES (%s, %s, %s, %s, %s, %s)", (revId, dt, currentSize, diffSize, TTHESAURUS_id, TUSER_id))
-
+      sdt = str(dt)
+      sdt = sdt.replace("T", " ")
+      sdt = sdt.replace("Z", " ")
+      cursor.execute("INSERT INTO TREVISION (revId, instant, currentSize, diffSize, idThesaurus, idUser) VALUES (%s, %s, %s, %s, %s, %s)", (revId, sdt, currentSize, diffSize, TTHESAURUS_id, TUSER_id))
+      cnx.commit()
       cursor.execute("SELECT * FROM TUSER")
       cursor.fetchall()
       nb1 = cursor.rowcount
