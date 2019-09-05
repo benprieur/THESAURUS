@@ -7,5 +7,5 @@ Ce code Python consiste en consolider les données issues du Wiktionnaire, qui c
 
 Ce code est utilisé/repris par un client web de visualisation, THESAURUS-web.
 
-Au 18 août 2019, il existe 420 thésaurus en français sur fr.wikt édités par 574 édit.eur.rice.s (IP ou compte inscrit) hors bot, pour un total de 8.706 éditions.
+Au 3 septembre 2019 00 h 00, il existe 417 thésaurus en français sur fr.wikt édités par 579 édit.eur.rice.s (IP ou compte inscrit) hors bot, pour un total de 8801 éditions.
 
